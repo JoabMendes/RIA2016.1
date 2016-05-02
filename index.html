@@ -1,1 +1,142 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Project Management">
+    <meta name="author" content="Joabe Mendes">
+    <meta name="contact" content="joab.mendes.r2d2@gmail.com">
 
+    <link rel="icon" href=".ico">
+    <title>Server Dashboard</title>
+
+
+    <!--jQuery-->
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+
+    <!--Bootstrap-->
+  	<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!--Angular-->
+    <script src="bower_components/angular/angular.min.js"></script>
+
+    <!--Chart.js-->
+    <script src="bower_components/Chart.js/dist/Chart.min.js"></script>
+
+    <!--Highcharts.js-->
+    <script src="bower_components/highcharts/highcharts.js"></script>
+    <script src="bower_components/highcharts/highcharts-more.js"></script>
+    <script src="bower_components/highcharts/modules/solid-gauge.js"></script>
+    <script src="bower_components/custon/highcharttheme.js"></script>
+
+    <!--Custom-->
+    <link href="bower_components/custon/style.css" rel="stylesheet">
+    <script src="bower_components/custon/script.js"></script>
+
+
+
+  </head>
+
+<body>
+
+<div class="container">
+
+
+  <div class="row">
+    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h3 class="panel-title">Network in</h3>
+        </div>
+        <div class="panel-body">
+              <h2>230 <span class="sub">KB/s</span></h2>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h3 class="panel-title">Network out</h3>
+        </div>
+        <div class="panel-body">
+              <h2>434 <span class="sub">KB/s</span</h2>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h3 class="panel-title">Requests</h3>
+        </div>
+        <div class="panel-body">
+          <h2>29830</h2>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h3 class="panel-title">Users</h3>
+        </div>
+        <div class="panel-body">
+          <h2>235</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="row">
+
+    <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h3 class="panel-title">Requests (Last min)</h3>
+        </div>
+        <div class="panel-body">
+          <canvas id="myChart" width="90%" height="40"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h3 class="panel-title">CPU Usage</h3>
+            </div>
+            <div class="panel-body">
+                <div id="cpu-usage" style="width: 300px; height: 150px; margin: auto;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h3 class="panel-title">Reads x Writes</h3>
+            </div>
+            <div class="panel-body">
+                <canvas id="reads-writes" width="90%" height="30"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+</div>
+
+</body>
+
+</html>

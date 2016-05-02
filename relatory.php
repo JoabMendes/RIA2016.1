@@ -18,8 +18,8 @@ function get_server_requests(){
 }
 
 //Return bad Requests
-function get_server_badrequests(){
-  return rand(10, 50)
+function get_server_users(){
+  return rand(10, 300)
 }
 
 function get_server_networkin(){
@@ -30,14 +30,21 @@ function get_server_networkout(){
   return rand(5000, 50000)
 }
 
+function get_server_reads(){
+  return rand(0, 100)
+}
+
+$reads = get_server_reads(),
 
 $data = array(
   'memory' => get_server_memory_usage(),
   'cpu' => get_server_cpu_usage(),
   'requests' => get_server_requests(),
-  'badrequests' => get_server_badrequests(),
+  'users' => get_server_users(),
   'networkin' => get_server_networkin(),
-  'networkout' => get_server_networkout()
+  'networkout' => get_server_networkout(),
+  'reads' => $reads,
+  'writes' => 100-$reads,
  );
 header('Content-Type: application/json');
 echo json_encode($data);
