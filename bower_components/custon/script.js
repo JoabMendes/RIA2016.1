@@ -1,164 +1,199 @@
 
-$( document ).ready(function() {
-    console.log( "ready!" );
 
-    ////////////////////////////////////////////////////////////////////////////
-    // Request chart
-    ///////////////////////////////////////////////////////////////////////////
-    var ctx = $("#myChart");
-
-    var data = {
-        labels: ["60s ago", "55s ago", "50s ago", "45s ago", "40s ago", "35s ago", "30s ago", "25s ago", "20s ago", "15s ago", "10s ago", "5s ago", "Now"],
-        datasets: [
-            {
-                label: "Requests",
-                fill: false,
-                lineTension: 0.1,
-                backgroundColor: "rgba(75,192,192,0.4)",
-                borderColor: "rgba(75,192,192,1)",
-                borderCapStyle: 'butt',
-                borderDash: [],
-                borderDashOffset: 0.0,
-                borderJoinStyle: 'miter',
-                pointBorderColor: "rgba(75,192,192,1)",
-                pointBackgroundColor: "#fff",
-                pointBorderWidth: 1,
-                pointHoverRadius: 5,
-                pointHoverBackgroundColor: "rgba(75,192,192,1)",
-                pointHoverBorderColor: "rgba(220,220,220,1)",
-                pointHoverBorderWidth: 2,
-                pointRadius: 1,
-                pointHitRadius: 10,
-                data: [100, 80, 213, 250, 198, 150, 160, 120, 50, 30, 50, 150, 180],
-            }
-        ]
-    };
-
-    var myLineChart = new Chart(ctx, {
-        type: 'line',
-        data: data,
-    });
-
+var app = angular.module('dashboard', []);
+app.controller('dashboardCtrl', function($scope) {
 
     ////////////////////////////////////////////////////////////////////////////////
     /// Computer use chart (speedometer)
     ///////////////////////////////////////////////////////////////////////////////
+    $scope.createComputerUseChart = function(computeuser){
+          if($scope.gaugeOptions == null){
+              $scope.gaugeOptions = {
 
-    var gaugeOptions = {
+                 chart: {
+                     type: 'solidgauge',
+                      renderTo: 'cpu-usage',
+                      backgroundColor:'#303030'
+                 },
 
-       chart: {
-           type: 'solidgauge'
-       },
+                 title: null,
 
-       title: null,
+                 pane: {
+                     center: ['50%', '85%'],
+                     size: '140%',
+                     startAngle: -90,
+                     endAngle: 90,
+                     background: {
+                         backgroundColor: '#EEE',
+                         innerRadius: '60%',
+                         outerRadius: '100%',
+                         shape: 'arc'
+                     }
+                 },
 
-       pane: {
-           center: ['50%', '85%'],
-           size: '140%',
-           startAngle: -90,
-           endAngle: 90,
-           background: {
-               backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || '#EEE',
-               innerRadius: '60%',
-               outerRadius: '100%',
-               shape: 'arc'
-           }
-       },
+                 tooltip: {
+                     enabled: true
+                 },
 
-       tooltip: {
-           enabled: false
-       },
+                 credits: {
+                     enabled: false
+                 },
 
-       // the value axis
-       yAxis: {
-           stops: [
-               [0.1, '#55BF3B'], // green
-               [0.5, '#DDDF0D'], // yellow
-               [0.9, '#DF5353'] // red
-           ],
-           lineWidth: 0,
-           minorTickInterval: null,
-           tickPixelInterval: 400,
-           tickWidth: 0,
-           title: {
-               y: -70
-           },
-           labels: {
-               y: 16
-           }
-       },
+                 // the value axis
+                 yAxis: {
+                     stops: [
+                         [0.1, '#55BF3B'], // green
+                         [0.5, '#DDDF0D'], // yellow
+                         [0.9, '#DF5353'] // red
+                     ],
+                     lineWidth: 0,
+                     minorTickInterval: null,
+                     tickPixelInterval: 400,
+                     tickWidth: 0,
+                     title: {
+                         y: -70
+                     },
+                     labels: {
+                         y: 16
+                     },
+                     min: 0,
+                     max: 100,
+                 },
 
-       plotOptions: {
-           solidgauge: {
-               dataLabels: {
-                   y: 5,
-                   borderWidth: 0,
-                   useHTML: true
-               }
-           }
-       }
-   };
+                 plotOptions: {
+                     solidgauge: {
+                         dataLabels: {
+                             y: 5,
+                             borderWidth: 0,
+                             useHTML: true
+                         }
+                     }
+                 },
 
+                 series: [{
+                     data: [computeuser],
+                     dataLabels: {
+                         format: '<div style="text-align:center"><span style="font-size:25px;color:' +
+                             ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'white') + '">{y}</span><br/>' +
+                                '<span style="font-size:12px;color:silver">%</span></div>'
+                     },
+                     tooltip: {
+                         valueSuffix: ' %'
+                     }
+                 }]
+             };
+          } //end if options
 
-    // The speed gauge
-    $('#cpu-usage').highcharts(Highcharts.merge(gaugeOptions, {
-        yAxis: {
-            min: 0,
-            max: 100,
-            title: {
-                text: 'Usage'
-            }
-        },
+          // The speed gauge
+          if($scope.cpruse == null){
+             $scope.cpruse = new Highcharts.Chart($scope.gaugeOptions)
+          }else{
+             $scope.cpruse.series[0].update({
+                  data: [computeuser],
+             });
+          }
 
-        credits: {
-            enabled: false
-        },
-
-        series: [{
-            name: 'Usage',
-            data: [50],
-            dataLabels: {
-                format: '<div style="text-align:center"><span style="font-size:25px;color:' +
-                    ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black') + '">{y}</span><br/>' +
-                       '<span style="font-size:12px;color:silver">%</span></div>'
-            },
-            tooltip: {
-                valueSuffix: ' %'
-            }
-        }]
-
-    }));
+    };
 
     //////////////////////////////////
     // Reads and writes chart
     //////////////////////////////////
+    $scope.createreadsAndWrites = function(reads, writes){
 
-    var data = {
-        labels: [
-            "Reads %",
-            "Writes %",
-        ],
-        datasets: [
-            {
-                data: [60, 40],
-                backgroundColor: [
-                    "rgba(75,192,192,1)",
-                    "#28b62c",
-                ],
-                hoverBackgroundColor: [
-                    "rgba(75,192,192,1)",
-                    "#28b62c",
-                ]
-            }]
+      var data = {
+          labels: [
+              "Reads %",
+              "Writes %",
+          ],
+          datasets: [
+              {
+                  data: [reads, writes],
+                  backgroundColor: [
+                      "rgba(75,192,192,1)",
+                      "#28b62c",
+                  ],
+                  hoverBackgroundColor: [
+                      "rgba(75,192,192,1)",
+                      "#28b62c",
+                  ]
+              }]
+      };
+
+
+      var ctx2 = $("#reads-writes");
+      // And for a doughnut chart
+      var myDoughnutChart = new Chart(ctx2, {
+          type: 'doughnut',
+          data: data,
+      });
+
     };
 
 
-    var ctx2 = $("#reads-writes");
-    // And for a doughnut chart
-    var myDoughnutChart = new Chart(ctx2, {
-        type: 'doughnut',
-        data: data,
-    });
+
+
+    ////////////////////////////////////////////////////////////////////////////
+    // Request chart
+    ///////////////////////////////////////////////////////////////////////////
+    $scope.createRequestsLineChart = function(){
+      var ctx = $("#myChart");
+
+      var data = {
+          labels: ["60s ago", "55s ago", "50s ago", "45s ago", "40s ago", "35s ago", "30s ago", "25s ago", "20s ago", "15s ago", "10s ago", "5s ago", "Now"],
+          datasets: [
+              {
+                  label: "Requests",
+                  fill: false,
+                  lineTension: 0.1,
+                  backgroundColor: "rgba(75,192,192,0.4)",
+                  borderColor: "rgba(75,192,192,1)",
+                  borderCapStyle: 'butt',
+                  borderDash: [],
+                  borderDashOffset: 0.0,
+                  borderJoinStyle: 'miter',
+                  pointBorderColor: "rgba(75,192,192,1)",
+                  pointBackgroundColor: "#fff",
+                  pointBorderWidth: 1,
+                  pointHoverRadius: 5,
+                  pointHoverBackgroundColor: "rgba(75,192,192,1)",
+                  pointHoverBorderColor: "rgba(220,220,220,1)",
+                  pointHoverBorderWidth: 2,
+                  pointRadius: 1,
+                  pointHitRadius: 10,
+                  data: [100, 80, 213, 250, 198, 150, 160, 120, 50, 30, 50, 150, 180],
+              }
+          ]
+      };
+
+      var myLineChart = new Chart(ctx, {
+          type: 'line',
+          data: data,
+      });
+    }
+
+
+    $scope.init =  function(){
+        $scope.netin = "235";
+        $scope.netout = "431";
+        $scope.requests = "29830";
+        $scope.users = "205";
+        $scope.computeuser = 60;
+        $scope.reads = 40;
+        $scope.writes = 60;
+
+        //Call chart creation
+        $scope.createComputerUseChart($scope.computeuser)
+
+        setTimeout(function(){ $scope.createComputerUseChart(20); }, 3000);
+        setTimeout(function(){ $scope.createComputerUseChart(70); }, 5000);
+        setTimeout(function(){ $scope.createComputerUseChart(95); }, 7000);
+
+        $scope.createreadsAndWrites($scope.reads, $scope.writes);
+
+        $scope.createRequestsLineChart();
+    }
+
+    $scope.init()
 
 
 });

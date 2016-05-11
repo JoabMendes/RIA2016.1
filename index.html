@@ -41,7 +41,7 @@
 
 <body>
 
-<div class="container">
+<div class="container" ng-app="dashboard" ng-controller="dashboardCtrl">
 
 
   <div class="row">
@@ -51,7 +51,7 @@
           <h3 class="panel-title">Network in</h3>
         </div>
         <div class="panel-body">
-              <h2>230 <span class="sub">KB/s</span></h2>
+              <h2>{{netin}} <span class="sub">KB/s</span></h2>
         </div>
       </div>
     </div>
@@ -62,7 +62,7 @@
           <h3 class="panel-title">Network out</h3>
         </div>
         <div class="panel-body">
-              <h2>434 <span class="sub">KB/s</span</h2>
+              <h2>{{netout}} <span class="sub">KB/s</span</h2>
         </div>
       </div>
     </div>
@@ -73,7 +73,7 @@
           <h3 class="panel-title">Requests</h3>
         </div>
         <div class="panel-body">
-          <h2>29830</h2>
+          <h2>{{requests}}</h2>
         </div>
       </div>
     </div>
@@ -84,7 +84,7 @@
           <h3 class="panel-title">Users</h3>
         </div>
         <div class="panel-body">
-          <h2>235</h2>
+          <h2>{{users}}</h2>
         </div>
       </div>
     </div>
