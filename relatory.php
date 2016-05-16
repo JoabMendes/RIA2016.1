@@ -1,4 +1,4 @@
-<?
+<?php
 
 /* Libraries */
 
@@ -14,27 +14,27 @@ function get_server_cpu_usage(){
 
 //Return Requests
 function get_server_requests(){
-  return rand(10, 500)
+  return rand(10, 500);
 }
 
 //Return bad Requests
 function get_server_users(){
-  return rand(10, 300)
+  return rand(250, 300);
 }
 
 function get_server_networkin(){
-  return rand(500, 50000)
+  return rand(500, 50000);
 }
 
 function get_server_networkout(){
-  return rand(5000, 50000)
+  return rand(5000, 50000);
 }
 
 function get_server_reads(){
-  return rand(0, 100)
+  return rand(0, 100);
 }
 
-$reads = get_server_reads(),
+$reads = get_server_reads();
 
 $data = array(
   'memory' => get_server_memory_usage(),
@@ -46,8 +46,8 @@ $data = array(
   'reads' => $reads,
   'writes' => 100-$reads,
  );
+
 header('Content-Type: application/json');
 echo json_encode($data);
-
 
 ?>

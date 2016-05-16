@@ -1,7 +1,7 @@
 
-
 var app = angular.module('dashboard', []);
-app.controller('dashboardCtrl', function($scope) {
+
+app.controller('dashboardCtrl', function($scope, $http) {
 
     ////////////////////////////////////////////////////////////////////////////////
     /// Computer use chart (speedometer)
@@ -173,27 +173,31 @@ app.controller('dashboardCtrl', function($scope) {
 
 
     $scope.init =  function(){
-        $scope.netin = "235";
-        $scope.netout = "431";
-        $scope.requests = "29830";
-        $scope.users = "205";
-        $scope.computeuser = 60;
-        $scope.reads = 40;
-        $scope.writes = 60;
+        $http.get("http://localhost/ria/relatory.php").then(function(response) {
+            $scope.netin = response.data.networkin;
+            $scope.netout = response.data.networkout;
+            $scope.requests = response.data.requests;
+            $scope.users = response.data.users;
+            $scope.computeuser = response.data.cpu;
+            $scope.reads = response.data.reads;
+            $scope.writes = response.data.writes;
+        });
 
         //Call chart creation
         $scope.createComputerUseChart($scope.computeuser)
 
-        setTimeout(function(){ $scope.createComputerUseChart(20); }, 3000);
-        setTimeout(function(){ $scope.createComputerUseChart(70); }, 5000);
-        setTimeout(function(){ $scope.createComputerUseChart(95); }, 7000);
+        //$scope.createreadsAndWrites($scope.reads, $scope.writes);
 
-        $scope.createreadsAndWrites($scope.reads, $scope.writes);
+        //$scope.createRequestsLineChart();
 
-        $scope.createRequestsLineChart();
+        setTimeout(function(){ $scope.init() }, 2000);
     }
 
-    $scope.init()
+    $scope.createreadsAndWrites(60, 40);
+
+    $scope.createRequestsLineChart();
+
+    $scope.init();
 
 
 });
