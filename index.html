@@ -30,6 +30,10 @@
     <script src="bower_components/highcharts/modules/solid-gauge.js"></script>
     <script src="bower_components/custon/highcharttheme.js"></script>
 
+    <!--Video js-->
+    <link href="bower_components/video.js/dist/video-js.min.css" rel="stylesheet">
+
+
     <!--Custom-->
     <link href="bower_components/custon/style.css" rel="stylesheet">
     <script src="bower_components/custon/script.js"></script>
@@ -133,8 +137,30 @@
 
   </div>
 
+  <div class="row">
+
+    <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h3 class="panel-title">Cameras</h3>
+        </div>
+        <div class="panel-body">
+          <video id="my-video" class="video-js" controls preload="auto" autoplay="true" width="640" height="264" data-setup="{}">
+              <source src="source/cam.mp4" type='video/mp4'>
+              <p class="vjs-no-js">
+                To view this video please enable JavaScript, and consider upgrading to a web browser that
+                <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+              </p>
+            </video>
+        </div>
+      </div>
+    </div>
+
+  </div>
 
 </div>
+
+<script src="bower_components/video.js/dist/video.min.js"></script>
 
 </body>
 

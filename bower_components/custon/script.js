@@ -184,7 +184,7 @@ app.controller('dashboardCtrl', function($scope, $http) {
 
 
     $scope.init =  function(){
-      //$http.get("https://localhost/ria/relatory.php").then(function(response) {
+      //$http.get("http://localhost/ria/relatory.php").then(function(response) {
         $http.get("https://relatory.herokuapp.com/relatory.php").then(function(response) {
             $scope.netin = response.data.networkin;
             $scope.netout = response.data.networkout;
