@@ -1,7 +1,7 @@
 
-
 var app = angular.module('dashboard', []);
-app.controller('dashboardCtrl', function($scope) {
+
+app.controller('dashboardCtrl', function($scope, $http) {
 
     ////////////////////////////////////////////////////////////////////////////////
     /// Computer use chart (speedometer)
@@ -191,6 +191,13 @@ app.controller('dashboardCtrl', function($scope) {
         $scope.createreadsAndWrites($scope.reads, $scope.writes);
 
         $scope.createRequestsLineChart();
+
+        $http.get("http://localhost/relatory.php").then(function(response) {
+            $scope.myWelcome = response.data;
+          console.log($scope.myWelcome);
+        });
+
+
     }
 
     $scope.init()
