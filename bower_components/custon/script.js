@@ -100,32 +100,38 @@ app.controller('dashboardCtrl', function($scope, $http) {
     //////////////////////////////////
     $scope.createreadsAndWrites = function(reads, writes){
 
-      var data = {
-          labels: [
-              "Reads %",
-              "Writes %",
-          ],
-          datasets: [
-              {
-                  data: [reads, writes],
-                  backgroundColor: [
-                      "rgba(75,192,192,1)",
-                      "#28b62c",
+      if($scope.myDoughnutChart == undefined){
+              var data = {
+                  labels: [
+                      "Reads %",
+                      "Writes %",
                   ],
-                  hoverBackgroundColor: [
-                      "rgba(75,192,192,1)",
-                      "#28b62c",
-                  ]
-              }]
-      };
+                  datasets: [
+                      {
+                          data: [reads, writes],
+                          backgroundColor: [
+                              "rgba(75,192,192,1)",
+                              "#28b62c",
+                          ],
+                          hoverBackgroundColor: [
+                              "rgba(75,192,192,1)",
+                              "#28b62c",
+                          ]
+                      }]
+              };
 
 
-      var ctx2 = $("#reads-writes");
-      // And for a doughnut chart
-      var myDoughnutChart = new Chart(ctx2, {
-          type: 'doughnut',
-          data: data,
-      });
+              var ctx2 = $("#reads-writes");
+              // And for a doughnut chart
+              $scope.myDoughnutChart = new Chart(ctx2, {
+                  type: 'doughnut',
+                  data: data,
+              });
+        }else{
+            $scope.myDoughnutChart.data.datasets[0].data[0] = reads;
+            $scope.myDoughnutChart.data.datasets[0].data[1] = writes;
+            $scope.myDoughnutChart.update();
+        }
 
     };
 
@@ -136,71 +142,73 @@ app.controller('dashboardCtrl', function($scope, $http) {
     // Request chart
     ///////////////////////////////////////////////////////////////////////////
     $scope.createRequestsLineChart = function(){
-      var ctx = $("#myChart");
-
-      var data = {
-          labels: ["60s ago", "55s ago", "50s ago", "45s ago", "40s ago", "35s ago", "30s ago", "25s ago", "20s ago", "15s ago", "10s ago", "5s ago", "Now"],
-          datasets: [
-              {
-                  label: "Requests",
-                  fill: false,
-                  lineTension: 0.1,
-                  backgroundColor: "rgba(75,192,192,0.4)",
-                  borderColor: "rgba(75,192,192,1)",
-                  borderCapStyle: 'butt',
-                  borderDash: [],
-                  borderDashOffset: 0.0,
-                  borderJoinStyle: 'miter',
-                  pointBorderColor: "rgba(75,192,192,1)",
-                  pointBackgroundColor: "#fff",
-                  pointBorderWidth: 1,
-                  pointHoverRadius: 5,
-                  pointHoverBackgroundColor: "rgba(75,192,192,1)",
-                  pointHoverBorderColor: "rgba(220,220,220,1)",
-                  pointHoverBorderWidth: 2,
-                  pointRadius: 1,
-                  pointHitRadius: 10,
-                  data: [100, 80, 213, 250, 198, 150, 160, 120, 50, 30, 50, 150, 180],
-              }
-          ]
-      };
-
-      var myLineChart = new Chart(ctx, {
-          type: 'line',
-          data: data,
-      });
+      if($scope.myLineChart == undefined){
+            var data = {
+                labels: ["60s ago", "55s ago", "50s ago", "45s ago", "40s ago", "35s ago", "30s ago", "25s ago", "20s ago", "15s ago", "10s ago", "5s ago", "Now"],
+                datasets: [
+                    {
+                        label: "Requests",
+                        fill: false,
+                        lineTension: 0.1,
+                        backgroundColor: "rgba(75,192,192,0.4)",
+                        borderColor: "rgba(75,192,192,1)",
+                        borderCapStyle: 'butt',
+                        borderDash: [],
+                        borderDashOffset: 0.0,
+                        borderJoinStyle: 'miter',
+                        pointBorderColor: "rgba(75,192,192,1)",
+                        pointBackgroundColor: "#fff",
+                        pointBorderWidth: 1,
+                        pointHoverRadius: 5,
+                        pointHoverBackgroundColor: "rgba(75,192,192,1)",
+                        pointHoverBorderColor: "rgba(220,220,220,1)",
+                        pointHoverBorderWidth: 2,
+                        pointRadius: 1,
+                        pointHitRadius: 10,
+                        data: [100, 80, 213, 250, 198, 150, 160, 120, 50, 30, 50, 150, 180],
+                    }
+                ]
+            };
+            var ctx = $("#myChart");
+            $scope.myLineChart = new Chart(ctx, {
+                type: 'line',
+                data: data,
+            });
+        }else{
+            console.log("updating");
+            $scope.myLineChart.data.datasets[0].data.shift();
+            $scope.myLineChart.data.datasets[0].data.push($scope.requests);
+            $scope.myLineChart.update();
+        }
     }
 
 
     $scope.init =  function(){
-        $scope.netin = "235";
-        $scope.netout = "431";
-        $scope.requests = "29830";
-        $scope.users = "205";
-        $scope.computeuser = 60;
-        $scope.reads = 40;
-        $scope.writes = 60;
+        $http.get("http://localhost/ria/relatory.php").then(function(response) {
+            $scope.netin = response.data.networkin;
+            $scope.netout = response.data.networkout;
+            $scope.requests = response.data.requests;
+            $scope.users = response.data.users;
+            $scope.computeuser = response.data.cpu;
+            $scope.reads = response.data.reads;
+            $scope.writes = response.data.writes;
+        });
 
         //Call chart creation
         $scope.createComputerUseChart($scope.computeuser)
-
-        setTimeout(function(){ $scope.createComputerUseChart(20); }, 3000);
-        setTimeout(function(){ $scope.createComputerUseChart(70); }, 5000);
-        setTimeout(function(){ $scope.createComputerUseChart(95); }, 7000);
 
         $scope.createreadsAndWrites($scope.reads, $scope.writes);
 
         $scope.createRequestsLineChart();
 
-        $http.get("http://localhost/relatory.php").then(function(response) {
-            $scope.myWelcome = response.data;
-          console.log($scope.myWelcome);
-        });
-
-
+        setTimeout(function(){ $scope.init() }, 5000);
     }
 
-    $scope.init()
+    $scope.createreadsAndWrites(60, 40);
+
+    $scope.createRequestsLineChart();
+
+    $scope.init();
 
 
 });
