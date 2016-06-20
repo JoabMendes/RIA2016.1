@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>IF MARKERS</title>
+
+    <!--jQuery-->
+    <script src="../bower_components/jquery/dist/jquery.min.js"></script>
+
+    <!--Bootstrap-->
+  	<script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <link href="../bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      #map {
+        height: 100%;
+      }
+
+      #firstHeading, #bodyContent{
+        color: #000;
+      }
+    </style>
+  </head>
+  <body>
+
+        <h1 style="margin-left: 50px; margin-top: 10px;">
+          <img style="width: 30px;" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Logotipo_IFET.svg/2000px-Logotipo_IFET.svg.png">
+          IFRNs
+        </h1>
+        <div id="map"></div>
+
+    <script>
+
+        function createinfo(place, map, marker){
+          var contentString = '<div id="content">'+
+               '<div id="siteNotice">'+
+               '</div>'+
+               '<h3 id="firstHeading" class="firstHeading">'+place+'</h3>'+
+               '<div id="bodyContent">'+
+               '<p><b>Estudantes</b>: '+Math.floor((Math.random() * 3000) + 1000) +'<br/>' +
+               '<p><b>Servidores</b>: '+Math.floor((Math.random() * 500) + 200) +'<br/>' +
+               '<p><b>IRA Médio</b>: '+Math.floor((Math.random() * 9.5) +  5.0) +'<br/>' +
+               '</div>'+
+               '</div>';
+
+
+          var infowindow = new google.maps.InfoWindow({
+            content: contentString
+          });
+
+          marker.addListener('click', function() {
+            infowindow.open(map, marker);
+          });
+        }
+
+
+        function initMap() {
+          var myLatLng = {lat: -5.8341637, lng: -36.5677185};
+
+          var map = new google.maps.Map(document.getElementById('map'), {
+            //zoom: 8,
+            center: myLatLng
+          });
+
+          var all_markers = [];
+
+          var marker = new google.maps.Marker({
+            position: {lat: -5.626647, lng: -37.8101295},
+            map: map,
+            title: 'Apodi'
+          });
+
+          createinfo('IFRN - Apodi', map, marker);
+
+          all_markers.push(marker)
+
+          var marker = new google.maps.Marker({
+            position: {lat: -6.442821, lng: -37.068686},
+            map: map,
+            title: 'Caicó'
+          });
+
+
+          createinfo('IFRN - Caicó', map, marker);
+
+          all_markers.push(marker)
+
+          var marker = new google.maps.Marker({
+            position: {lat: -6.3573412, lng: -35.1639801},
+            map: map,
+            title: 'Canguaretama'
+          });
+
+          createinfo('IFRN - Canguaretama', map, marker);
+
+          all_markers.push(marker)
+
+          var marker = new google.maps.Marker({
+            position: {lat: -5.6527154, lng: -35.4314164},
+            map: map,
+            title: 'Ceará-Mirim'
+          });
+
+          createinfo('IFRN - Ceará-Mirim', map, marker);
+
+          all_markers.push(marker)
+
+          var marker = new google.maps.Marker({
+            position: {lat: -6.2530344, lng: -36.5361236},
+            map: map,
+            title: 'Currais Novos'
+          });
+
+          createinfo('IFRN - Currais Novos', map, marker);
+
+          all_markers.push(marker)
+
+          var marker = new google.maps.Marker({
+            position: {lat: -5.535638, lng: -36.8732075},
+            map: map,
+            title: 'Ipanguaçu'
+          });
+
+          createinfo('IFRN - Ipanguaçu', map, marker);
+
+          all_markers.push(marker)
+
+          var marker = new google.maps.Marker({
+            position: {lat: -5.5441443, lng: -35.8008492},
+            map: map,
+            title: 'João Câmara'
+          });
+
+          createinfo('IFRN - João Câmara', map, marker);
+
+          all_markers.push(marker)
+
+          var marker = new google.maps.Marker({
+            position: {lat: -5.1519453, lng: -36.5771342},
+            map: map,
+            title: 'Macau'
+          });
+
+          createinfo('IFRN - Macau', map, marker);
+
+          all_markers.push(marker)
+
+          var marker = new google.maps.Marker({
+            position: {lat: -5.2138105, lng: -37.3217444},
+            map: map,
+            title: 'Mossoró'
+          });
+
+          createinfo('IFRN - Mossoró', map, marker);
+
+          all_markers.push(marker)
+
+          var marker = new google.maps.Marker({
+              position: {lat: -5.8761029, lng: -35.3116364},
+              map: map,
+              title: 'Natal - Central'
+          });
+
+          createinfo('IFRN - Central', map, marker);
+
+          all_markers.push(marker)
+
+          var marker = new google.maps.Marker({
+              position: {lat: -5.7882708, lng: -35.2096781},
+              map: map,
+              title: 'Natal - Cidade Alta'
+          });
+
+          createinfo('IFRN - Cidade Alta', map, marker);
+
+          all_markers.push(marker)
+
+          var marker = new google.maps.Marker({
+              position: {lat: -5.7494145, lng: -35.263014},
+              map: map,
+              title: 'Natal - Zona Norte'
+          });
+
+          createinfo('IFRN - Zona Norte', map, marker);
+
+          all_markers.push(marker)
+
+          var marker = new google.maps.Marker({
+              position: {lat: -6.4705778, lng: -35.447135},
+              map: map,
+              title: 'Nova Cruz'
+          });
+
+          createinfo('IFRN - Nova Cruz', map, marker);
+
+          all_markers.push(marker)
+
+          var marker = new google.maps.Marker({
+              position: {lat: -6.6995016, lng: -36.6697472},
+              map: map,
+              title: 'Parelhas'
+          });
+
+          createinfo('IFRN - Parelhas', map, marker);
+
+          all_markers.push(marker)
+
+          var marker = new google.maps.Marker({
+              position: {lat: -5.9386565, lng: -35.268542},
+              map: map,
+              title: 'Parnamirim'
+          });
+
+          createinfo('IFRN - Parnamirim', map, marker);
+
+          all_markers.push(marker)
+
+          var marker = new google.maps.Marker({
+              position: {lat: -6.1460489, lng: -38.2068744},
+              map: map,
+              title: 'Pau dos Ferros'
+          });
+
+          createinfo('IFRN - Pau dos Ferros', map, marker);
+
+          all_markers.push(marker)
+
+          var marker = new google.maps.Marker({
+              position: {lat: -6.228237, lng: -36.0292425},
+              map: map,
+              title: 'Santa Cruz'
+          });
+
+          createinfo('IFRN - Santa Cruz', map, marker);
+
+          all_markers.push(marker)
+
+          var marker = new google.maps.Marker({
+              position: {lat: -5.7904523, lng: -35.3405642},
+              map: map,
+              title: 'São Gonçalo do Amarante'
+          });
+
+          createinfo('IFRN - São Gonçalo do Amarante', map, marker);
+
+          all_markers.push(marker)
+
+          var marker = new google.maps.Marker({
+              position: {lat: -5.8954754, lng: -35.7566919},
+              map: map,
+              title: 'São Paulo do Potengi'
+          });
+
+          createinfo('IFRN - São Paulo do Potengi', map, marker);
+
+          all_markers.push(marker)
+
+          var bounds = new google.maps.LatLngBounds();
+          for (var i = 0; i < all_markers.length; i++) {
+            bounds.extend(all_markers[i].getPosition());
+          }
+
+          map.fitBounds(bounds);
+
+        }
+
+    </script>
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD6JL_VkQcYUKsChasWjft1Qwo0XBB_zOY&signed_in=true&callback=initMap"></script>
+  </body>
+</html>
